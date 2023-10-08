@@ -1,0 +1,31 @@
+import sys
+sys.setrecursionlimit(10000)
+st_arr=input('Введите массив:')
+st_arr=list(map(int,st_arr.split()))
+def block_sort(x):
+    flag=True
+    for i in range(1,len(x)):
+        if x[i]!=x[0]:
+            flag=False
+            break
+    if flag==True:
+        return x
+    else:
+        mid=(max(x)+min(x))/2
+        new_x=[]
+        new_x.append([])
+        new_x.append([])
+        for i in range(len(x)):
+            if x[i]<=mid:
+                new_x[0].append(x[i])
+            else:
+                new_x[1].append(x[i])
+        new_x[0]=block_sort(new_x[0])
+        new_x[1]=block_sort(new_x[1])
+        new_new_x=[]
+        for i in range(len(new_x[0])):
+            new_new_x.append(new_x[0][i])
+        for i in range(len(new_x[1])):
+            new_new_x.append(new_x[1][i])
+        return new_new_x
+print('Отсортированный массив:',block_sort(st_arr))
