@@ -1,0 +1,40 @@
+import sys
+sys.setrecursionlimit(10000)
+st_arr=input('Введите массив:')
+st_arr=list(map(int,st_arr.split()))
+def heapify_check(x,i):
+    if (2*i+1>=len(x)):
+        return x
+    elif 2*i+2>=len(x):
+        if x[i]<x[2*i+1]:
+            x[i],x[2*i+1]=x[2*i+1],x[i]
+        return x
+    else:
+        i_change=0
+        if x[2*i+1]>=x[2*i+2]:
+            i_change=2*i+1
+        else:
+            i_change=2*i+2
+        x[i],x[i_change]=x[i_change],x[i]
+        return x
+def heapify_final(st_arr):
+    while st_arr[0]!=max(st_arr):
+        for i in range(len(st_arr)):
+            st_arr=heapify_check(st_arr,i)
+    return st_arr
+def heapsort(st_arr):
+    final=[]
+    n=len(st_arr)
+    for i in range(n):
+        if len(st_arr)>1:
+            st_arr=heapify_final(st_arr)
+            final.append(st_arr[0])
+            st_arr.pop(0)
+        else:
+            final.append(st_arr[0])
+            st_arr.pop(0)
+    final_final=[]
+    for i in range(len(final)-1,-1,-1):
+        final_final.append(final[i])
+    return final_final
+print('Отсортированный массив:',heapsort(st_arr))
