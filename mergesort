@@ -1,0 +1,34 @@
+import sys
+sys.setrecursionlimit(10000)
+st_arr=input('Введите массив:')
+st_arr=list(map(int,st_arr.split()))
+def merge_sort(st_arr):
+    left=st_arr[:(len(st_arr)//2)]
+    right=st_arr[(len(st_arr)//2):]
+    if len(left)!=1:
+        left=merge_sort(left)
+    if len(right)!=1:
+        right=merge_sort(right)
+    final=[0]*len(st_arr)
+    j=0
+    while len(left)>0 and len(right)>0:
+        if left[0]>=right[0]:
+            final[j]=right[0]
+            right.pop(0)
+            j+=1
+        else:
+            final[j]=left[0]
+            left.pop(0)
+            j+=1
+    if len(left)==0:
+        while j<len(st_arr):
+            final[j]=right[0]
+            right.pop(0)
+            j+=1
+    else:
+        while j<len(st_arr):
+            final[j]=left[0]
+            left.pop(0)
+            j+=1
+    return final
+print('Отсортированный массив:',merge_sort(st_arr))
